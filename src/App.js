@@ -1,36 +1,45 @@
-import './App.css';
+
 import {useState} from "react";
 import Counter from "./Counter";
 
 const initialCounts = [
-    {id: 1, value: 10},
-    {id: 2, value: 20},
-    {id: 3, value: 30},
+    {id: 1, title: 'Blue', count: 10},
+    {id: 2, title: 'Pink', count: 20},
+    {id: 3, title: 'Yellow', count: 30},
 ]
 
 function App() {
-    const [counter, setCounter] = useState(initialCounts);
+    const [counters, setCounters] = useState(initialCounts);
 
-    const onPlus = (id) => {
-        const newCount = counter.map(el => id === el.id ? {...el, value: el.value + 1} : el)
-        setCounter(newCount)
-    }
-    const onMinus = (id) => {
-        const newCount = counter.map(el => id === el.id ? {...el, value: el.value - 1} : el)
-        setCounter(newCount)
-    }
+const deleteById = (id) => {
+    const filteredCounters = counters.filter(el => el.id !== id);
+    setCounters(filteredCounters);
+};
 
+const upById = (id) => {
+
+}
 
 
     return (
         <div className="App">
 
-            {counter.map(el => <Counter value={el.value}
-                                        key={el.id}
-                                        id={el.id}
-                                        onPlus={onPlus}
-                                        onMinus={onMinus}
-            />)}
+            Counters
+
+            <ul>
+                {counters.map(el => <li key={el.id}>  {el.title}
+                    <button>-</button>
+                    {el.count}
+                    <button>+</button>
+                    <button onClick={() => deleteById(el.id)}>Delete</button>
+                    <button onClick={() => upById(el.id)}>Up</button>
+                    <button>Down</button>
+                </li>)}
+            </ul>
+
+            <input type="text" placeholder="Counter title"/>
+            <input type="text" placeholder="Counter value"/>
+            <button>Add counter</button>
 
         </div>
     );
